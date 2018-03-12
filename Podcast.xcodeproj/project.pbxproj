@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		10FBD0E569363C8685BEB322 /* Pods_Podcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 192B104F3F5FCB585A5B6FB3 /* Pods_Podcast.framework */; };
+		673BC0CC2056B09500B9F4B5 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BC0CB2056B09500B9F4B5 /* APIService.swift */; };
 		67ECFBD52056944A004F6562 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67ECFBD42056944A004F6562 /* AppDelegate.swift */; };
 		67ECFBD72056944A004F6562 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67ECFBD62056944A004F6562 /* ViewController.swift */; };
 		67ECFBDA2056944A004F6562 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67ECFBD82056944A004F6562 /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		192B104F3F5FCB585A5B6FB3 /* Pods_Podcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Podcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		673BC0CB2056B09500B9F4B5 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = Podcast/API/APIService.swift; sourceTree = SOURCE_ROOT; };
 		67ECFBD12056944A004F6562 /* Podcast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Podcast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67ECFBD42056944A004F6562 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		67ECFBD62056944A004F6562 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -46,6 +48,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		673BC0CA2056B06000B9F4B5 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				673BC0CB2056B09500B9F4B5 /* APIService.swift */,
+			);
+			name = API;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		67ECFBC82056944A004F6562 = {
 			isa = PBXGroup;
 			children = (
@@ -67,6 +78,7 @@
 		67ECFBD32056944A004F6562 /* Podcast */ = {
 			isa = PBXGroup;
 			children = (
+				673BC0CA2056B06000B9F4B5 /* API */,
 				67ECFBEB20569CD7004F6562 /* Models */,
 				67ECFBE820569C4B004F6562 /* Controllers */,
 				67ECFBD42056944A004F6562 /* AppDelegate.swift */,
@@ -246,6 +258,7 @@
 				67ECFBD72056944A004F6562 /* ViewController.swift in Sources */,
 				67ECFBD52056944A004F6562 /* AppDelegate.swift in Sources */,
 				67ECFBE72056950D004F6562 /* MainTabBarController.swift in Sources */,
+				673BC0CC2056B09500B9F4B5 /* APIService.swift in Sources */,
 				67ECFBED20569CEC004F6562 /* Podcast.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
