@@ -30,7 +30,14 @@ class PlayerDetailsView: UIView {
     @IBAction func handleDismiss(_ sender: Any) {
         self.removeFromSuperview()
     }
-    @IBOutlet weak var episodeImageView: UIImageView!
+    @IBOutlet weak var episodeImageView: UIImageView! {
+        didSet {
+            episodeImageView.layer.cornerRadius = 5
+            episodeImageView.clipsToBounds = true
+            let scale: CGFloat = 0.7
+            episodeImageView.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }
+    }
     @IBOutlet weak var episodeTitleLabel: UILabel! {
         didSet {
             episodeTitleLabel.numberOfLines = 2
@@ -41,6 +48,17 @@ class PlayerDetailsView: UIView {
         didSet {
             playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             playPauseButton.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
+        }
+    }
+    
+    //MARK: - Awake from NIB
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        let time = CMTime(value: 1, timescale: 3)
+        let times = [NSValue(time: time)]
+        player.addBoundaryTimeObserver(forTimes: times, queue: .main) {
+            self.enlargeEpisodeImageView()
         }
     }
     
@@ -56,9 +74,24 @@ class PlayerDetailsView: UIView {
         if player.timeControlStatus == .paused {
             player.play()
             playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            enlargeEpisodeImageView()
         } else {
             player.pause()
             playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            shrinkEpisodeImageView()
         }
+    }
+    
+    private func enlargeEpisodeImageView() {
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.episodeImageView.transform = .identity
+        })
+    }
+    
+    private func shrinkEpisodeImageView() {
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            let scale: CGFloat = 0.7
+            self.episodeImageView.transform = CGAffineTransform(scaleX: scale, y: scale)
+        })
     }
 }
