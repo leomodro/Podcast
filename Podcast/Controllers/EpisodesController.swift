@@ -27,7 +27,7 @@ class EpisodesController: UITableViewController {
             case let .rss(feed):
                 var episodes = [Episode]()
                 feed.items?.forEach({ (feedItem) in
-                    let episode = Episode(title: feedItem.title ?? "")
+                    let episode = Episode(feedItem: feedItem)
                     episodes.append(episode)
                 })
                 self.episodes = episodes
@@ -44,14 +44,7 @@ class EpisodesController: UITableViewController {
         })
     }
     fileprivate let cellId = "cellId"
-    struct Episode {
-        let title: String
-    }
-    var episodes = [
-        Episode(title: "First Episode"),
-        Episode(title: "Second Episode"),
-        Episode(title: "Third Episode")
-    ]
+    var episodes = [Episode]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +55,7 @@ class EpisodesController: UITableViewController {
     //MARK: - Setups
     private func setupTableView() {
         tableView.tableFooterView = UIView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(UINib(nibName: "EpisodeCell", bundle: nil), forCellReuseIdentifier: cellId)
     }
     
     //MARK: - Table View
@@ -71,10 +64,14 @@ class EpisodesController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EpisodeCell
         let episode = episodes[indexPath.row]
-        cell.textLabel?.text = episode.title
+        cell.episode = episode        
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 134
     }
     
 }
