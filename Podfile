@@ -5,5 +5,6 @@ target 'Podcast' do
   
   pod 'Alamofire'
   pod 'SDWebImage'
+  pod 'FeedKit'
   
 end

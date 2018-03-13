@@ -7,13 +7,41 @@
 //
 
 import UIKit
+import FeedKit
 
 class EpisodesController: UITableViewController {
     
     var podcast: Podcast! {
         didSet {
             navigationItem.title = podcast.trackName
+            fetchEpisodes()
         }
+    }
+    private func fetchEpisodes() {
+        guard let feedURL = podcast.feedUrl else { return }
+        let secureFeedURL = feedURL.contains("https") ? feedURL : feedURL.replacingOccurrences(of: "http", with: "https")
+        guard let url = URL(string: secureFeedURL) else { return }
+        let parser = FeedParser(URL: url)
+        parser?.parseAsync(result: { (result) in
+            switch result {
+            case let .rss(feed):
+                var episodes = [Episode]()
+                feed.items?.forEach({ (feedItem) in
+                    let episode = Episode(title: feedItem.title ?? "")
+                    episodes.append(episode)
+                })
+                self.episodes = episodes
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                break
+            case let .failure(error):
+                print("Failed to parse feed: ", error)
+                break
+            default:
+                print("Found a feed...")
+            }
+        })
     }
     fileprivate let cellId = "cellId"
     struct Episode {
