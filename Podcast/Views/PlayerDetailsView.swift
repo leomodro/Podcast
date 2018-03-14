@@ -27,9 +27,6 @@ class PlayerDetailsView: UIView {
         }
     }
     
-    @IBAction func handleDismiss(_ sender: Any) {
-        self.removeFromSuperview()
-    }
     @IBOutlet weak var episodeImageView: UIImageView! {
         didSet {
             episodeImageView.layer.cornerRadius = 5
@@ -38,6 +35,9 @@ class PlayerDetailsView: UIView {
             episodeImageView.transform = CGAffineTransform(scaleX: scale, y: scale)
         }
     }
+    @IBOutlet weak var currentTimeLabel: UILabel!
+    @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var currentTimeSlider: UISlider!
     @IBOutlet weak var episodeTitleLabel: UILabel! {
         didSet {
             episodeTitleLabel.numberOfLines = 2
@@ -51,15 +51,40 @@ class PlayerDetailsView: UIView {
         }
     }
     
+    //MARK: - Actions
+    @IBAction func handleDismiss(_ sender: Any) {
+        self.removeFromSuperview()
+    }
+    
     //MARK: - Awake from NIB
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        observePlayerCurrentTime()
         
         let time = CMTime(value: 1, timescale: 3)
         let times = [NSValue(time: time)]
         player.addBoundaryTimeObserver(forTimes: times, queue: .main) {
             self.enlargeEpisodeImageView()
         }
+    }
+    
+    private func observePlayerCurrentTime() {
+        let interval = CMTime(value: 1, timescale: 2)
+        player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { (time) in
+            self.currentTimeLabel.text = time.toDisplayString()
+            let durationTime = self.player.currentItem?.duration.toDisplayString()
+            self.durationLabel.text = durationTime
+            
+            self.updateCurrentTimeSlider()
+        }
+    }
+    
+    private func updateCurrentTimeSlider() {
+        let currentTimeSeconds = CMTimeGetSeconds(player.currentTime())
+        let durationSeconds = CMTimeGetSeconds(player.currentItem?.duration ?? CMTime(value: 1, timescale: 1))
+        let percentage = currentTimeSeconds / durationSeconds
+        self.currentTimeSlider.value = Float(percentage)
     }
     
     //MARK: - Play / Pause Episode
