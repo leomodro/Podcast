@@ -14,7 +14,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     var podcasts = [Podcast]()
     let cellId = "cellId"
     let searchController = UISearchController(searchResultsController: nil)
-    var timer: Timer?
+    let debounce = Debouncer(interval: 0.5)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,13 +39,13 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     //MARK: - Search Delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
+        debounce.call()
+        debounce.callback = {
             APIService.shared.fetchPodcasts(searchText: searchText) { (podcast) in
                 self.podcasts = podcast
                 self.tableView.reloadData()
             }
-        })
+        }
     }
     
     //MARK: - Table View
@@ -75,7 +75,16 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.podcasts.count > 0 ? 0 : 250
+        return self.podcasts.isEmpty && searchController.searchBar.text?.isEmpty == true ? 250 : 0
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let podcastSearchView = Bundle.main.loadNibNamed("PodcastsSearchingView", owner: self, options: nil)?.first as? UIView
+        return podcastSearchView
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return podcasts.isEmpty && searchController.searchBar.text?.isEmpty == false ? 200 : 0
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
