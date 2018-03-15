@@ -44,6 +44,9 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="36" id="JS9-rX-q50"/>
                             </constraints>
+                            <connections>
+                                <action selector="handleCurrentTimeSliderChange:" destination="vpZ-hZ-Hgo" eventType="valueChanged" id="bey-dU-1SL"/>
+                            </connections>
                         </slider>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJE-fo-8LU">
                             <rect key="frame" x="0.0" y="416" width="327" height="22"/>
@@ -97,6 +100,9 @@
                                     </constraints>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Button" image="rewind15"/>
+                                    <connections>
+                                        <action selector="handleRewind:" destination="vpZ-hZ-Hgo" eventType="touchUpInside" id="iKn-tC-oVc"/>
+                                    </connections>
                                 </button>
                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oLK-ua-qIg">
                                     <rect key="frame" x="93" y="0.0" width="48.5" height="99"/>
@@ -121,6 +127,9 @@
                                     </constraints>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Button" image="fastforward15"/>
+                                    <connections>
+                                        <action selector="handleFastFoward:" destination="vpZ-hZ-Hgo" eventType="touchUpInside" id="7bh-62-yCP"/>
+                                    </connections>
                                 </button>
                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WyR-y1-DvQ">
                                     <rect key="frame" x="278.5" y="0.0" width="48.5" height="99"/>
@@ -137,8 +146,11 @@
                                         <constraint firstAttribute="width" constant="34" id="1xG-05-cu6"/>
                                     </constraints>
                                 </imageView>
-                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="eyx-o7-6VJ">
+                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="eyx-o7-6VJ">
                                     <rect key="frame" x="32" y="0.0" width="263" height="35"/>
+                                    <connections>
+                                        <action selector="handleVolumeChange:" destination="vpZ-hZ-Hgo" eventType="valueChanged" id="CBO-tE-sZv"/>
+                                    </connections>
                                 </slider>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="max_volume" translatesAutoresizingMaskIntoConstraints="NO" id="pKY-WQ-ZDf">
                                     <rect key="frame" x="293" y="0.0" width="34" height="34"/>

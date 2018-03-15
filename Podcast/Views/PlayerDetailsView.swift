@@ -56,6 +56,33 @@ class PlayerDetailsView: UIView {
         self.removeFromSuperview()
     }
     
+    @IBAction func handleCurrentTimeSliderChange(_ sender: Any) {
+        let percentage = currentTimeSlider.value
+        guard let duration = player.currentItem?.duration else { return }
+        let durationInSeconds = CMTimeGetSeconds(duration)
+        let seekTimeInSeconds = Float64(percentage) * durationInSeconds
+        let seekTime = CMTimeMakeWithSeconds(seekTimeInSeconds, 1)
+        player.seek(to: seekTime)
+    }
+    
+    @IBAction func handleRewind(_ sender: Any) {
+        seekToCurrentTime(delta: -15)
+    }
+    
+    @IBAction func handleFastFoward(_ sender: Any) {
+        seekToCurrentTime(delta: 15)
+    }
+    
+    @IBAction func handleVolumeChange(_ sender: UISlider) {
+        player.volume = sender.value
+    }
+    
+    private func seekToCurrentTime(delta: Int64) {
+        let fifteenSeconds = CMTime(value: delta, timescale: 1)
+        let seekTime = CMTimeAdd(player.currentTime(), fifteenSeconds)
+        player.seek(to: seekTime)
+    }
+    
     //MARK: - Awake from NIB
     override func awakeFromNib() {
         super.awakeFromNib()
