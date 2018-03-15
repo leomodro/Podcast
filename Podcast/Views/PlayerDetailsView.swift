@@ -91,19 +91,19 @@ class PlayerDetailsView: UIView {
         
         let time = CMTime(value: 1, timescale: 3)
         let times = [NSValue(time: time)]
-        player.addBoundaryTimeObserver(forTimes: times, queue: .main) {
-            self.enlargeEpisodeImageView()
+        player.addBoundaryTimeObserver(forTimes: times, queue: .main) { [weak self] in
+            self?.enlargeEpisodeImageView()
         }
     }
     
     private func observePlayerCurrentTime() {
         let interval = CMTime(value: 1, timescale: 2)
-        player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { (time) in
-            self.currentTimeLabel.text = time.toDisplayString()
-            let durationTime = self.player.currentItem?.duration.toDisplayString()
-            self.durationLabel.text = durationTime
+        player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] (time) in
+            self?.currentTimeLabel.text = time.toDisplayString()
+            let durationTime = self?.player.currentItem?.duration.toDisplayString()
+            self?.durationLabel.text = durationTime
             
-            self.updateCurrentTimeSlider()
+            self?.updateCurrentTimeSlider()
         }
     }
     

@@ -36,15 +36,17 @@ class APIService {
     func fetchEpisodes(feedURL: String, completionHandler: @escaping ([Episode]) -> ()) {
         let secureFeedURL = feedURL.contains("https") ? feedURL : feedURL.replacingOccurrences(of: "http", with: "https")
         guard let url = URL(string: secureFeedURL) else { return }
-        let parser = FeedParser(URL: url)
-        parser?.parseAsync(result: { (result) in
-            if let err = result.error {
-                print("Failed to parse XML feed: ", err)
-                return
-            }            
-            guard let feed = result.rssFeed else { return }
-            completionHandler(feed.toEpisodes())
-        })
+        DispatchQueue.global(qos: .background).async {
+            let parser = FeedParser(URL: url)
+            parser?.parseAsync(result: { (result) in
+                if let err = result.error {
+                    print("Failed to parse XML feed: ", err)
+                    return
+                }
+                guard let feed = result.rssFeed else { return }
+                completionHandler(feed.toEpisodes())
+            })
+        }
     }
     
     struct SearchResults: Decodable {
