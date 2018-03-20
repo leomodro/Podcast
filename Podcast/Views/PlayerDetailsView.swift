@@ -74,7 +74,6 @@ class PlayerDetailsView: UIView {
     @IBAction func handleDismiss(_ sender: Any) {
         guard let mainTabBar = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
         mainTabBar.minimizePlayerDetails()
-        panGesture.isEnabled = true
         
     }
     
@@ -109,10 +108,7 @@ class PlayerDetailsView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapMaximize)))
-        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        addGestureRecognizer(panGesture)
-        
+        setupGestures()
         observePlayerCurrentTime()
         
         let time = CMTime(value: 1, timescale: 3)
