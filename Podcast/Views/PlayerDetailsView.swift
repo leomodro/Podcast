@@ -18,15 +18,33 @@ class PlayerDetailsView: UIView {
     }()
     var episode: Episode! {
         didSet {
+            miniTitleLabel.text = episode.title
             episodeTitleLabel.text = episode.title
             authorLabel.text = episode.author
             guard let url = URL(string: episode.imageUrl?.toSecureHTTPS() ?? "") else { return }
             episodeImageView.sd_setImage(with: url)
+            miniEpisodeImageView.sd_setImage(with: url)
             
             playEpisode()
         }
     }
+    @IBOutlet weak var miniPlayerView: UIView!
+    @IBOutlet weak var miniTitleLabel: UILabel!
+    @IBOutlet weak var miniPlayPauseButton: UIButton! {
+        didSet {
+            miniPlayPauseButton.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
+            miniPlayPauseButton.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+        }
+    }
+    @IBOutlet weak var miniFastFowardButton: UIButton! {
+        didSet {
+            miniFastFowardButton.addTarget(self, action: #selector(handleFastFoward(_:)), for: .touchUpInside)
+            miniFastFowardButton.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+        }
+    }
+    @IBOutlet weak var miniEpisodeImageView: UIImageView!
     
+    @IBOutlet weak var maximizedStackView: UIStackView!
     @IBOutlet weak var episodeImageView: UIImageView! {
         didSet {
             episodeImageView.layer.cornerRadius = 5
@@ -138,10 +156,12 @@ class PlayerDetailsView: UIView {
         if player.timeControlStatus == .paused {
             player.play()
             playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            miniPlayPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             enlargeEpisodeImageView()
         } else {
             player.pause()
             playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            miniPlayPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
             shrinkEpisodeImageView()
         }
     }
