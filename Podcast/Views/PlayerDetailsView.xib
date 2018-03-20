@@ -20,6 +20,13 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4AV-9b-DCx">
                     <rect key="frame" x="0.0" y="20" width="375" height="64"/>
                     <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ZP-RA-H7p">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="0.5"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="S34-HW-Ozt"/>
+                            </constraints>
+                        </view>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kLL-Tg-0kO">
                             <rect key="frame" x="8" y="8" width="359" height="48"/>
                             <subviews>
@@ -57,9 +64,12 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="kLL-Tg-0kO" firstAttribute="top" secondItem="4AV-9b-DCx" secondAttribute="top" constant="8" id="4ZS-rB-wUO"/>
+                        <constraint firstAttribute="trailing" secondItem="7ZP-RA-H7p" secondAttribute="trailing" id="5PE-U1-g29"/>
                         <constraint firstAttribute="trailing" secondItem="kLL-Tg-0kO" secondAttribute="trailing" constant="8" id="D27-ey-Tw2"/>
+                        <constraint firstItem="7ZP-RA-H7p" firstAttribute="leading" secondItem="4AV-9b-DCx" secondAttribute="leading" id="G9U-7D-cSq"/>
                         <constraint firstAttribute="height" constant="64" id="O4n-bR-afT"/>
                         <constraint firstAttribute="bottom" secondItem="kLL-Tg-0kO" secondAttribute="bottom" constant="8" id="hrw-bV-lhD"/>
+                        <constraint firstItem="7ZP-RA-H7p" firstAttribute="top" secondItem="4AV-9b-DCx" secondAttribute="top" id="ue9-ys-0Tb"/>
                         <constraint firstItem="kLL-Tg-0kO" firstAttribute="leading" secondItem="4AV-9b-DCx" secondAttribute="leading" constant="8" id="yAF-bf-vUW"/>
                     </constraints>
                 </view>

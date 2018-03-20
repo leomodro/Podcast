@@ -11,6 +11,7 @@ import AVKit
 
 class PlayerDetailsView: UIView {
     
+    var panGesture: UIPanGestureRecognizer!
     let player: AVPlayer = {
         let avPlayer = AVPlayer()
         avPlayer.automaticallyWaitsToMinimizeStalling = false
@@ -73,6 +74,8 @@ class PlayerDetailsView: UIView {
     @IBAction func handleDismiss(_ sender: Any) {
         guard let mainTabBar = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
         mainTabBar.minimizePlayerDetails()
+        panGesture.isEnabled = true
+        
     }
     
     @IBAction func handleCurrentTimeSliderChange(_ sender: Any) {
@@ -107,6 +110,8 @@ class PlayerDetailsView: UIView {
         super.awakeFromNib()
         
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapMaximize)))
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        addGestureRecognizer(panGesture)
         
         observePlayerCurrentTime()
         
@@ -117,15 +122,11 @@ class PlayerDetailsView: UIView {
         }
     }
     
-    @objc func handleTapMaximize() {
-        guard let mainTabBar = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
-        mainTabBar.maximizePlayerDetails(episode: nil)
-    }
-    
     static func initFromNib() -> PlayerDetailsView {
         return Bundle.main.loadNibNamed("PlayerDetailsView", owner: self, options: nil)?.first as! PlayerDetailsView
     }
     
+    //MARK: - Player Time
     private func observePlayerCurrentTime() {
         let interval = CMTime(value: 1, timescale: 2)
         player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] (time) in

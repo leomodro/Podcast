@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		10FBD0E569363C8685BEB322 /* Pods_Podcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 192B104F3F5FCB585A5B6FB3 /* Pods_Podcast.framework */; };
+		670766F12061433B004B19ED /* PlayerDetailsView+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670766F02061433B004B19ED /* PlayerDetailsView+Gestures.swift */; };
 		67213DC52056C49100009DB5 /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67213DC42056C49100009DB5 /* EpisodesController.swift */; };
 		673BC0CC2056B09500B9F4B5 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BC0CB2056B09500B9F4B5 /* APIService.swift */; };
 		673BC0D12056B77200B9F4B5 /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BC0D02056B77200B9F4B5 /* PodcastCell.swift */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		192B104F3F5FCB585A5B6FB3 /* Pods_Podcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Podcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		670766F02061433B004B19ED /* PlayerDetailsView+Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerDetailsView+Gestures.swift"; sourceTree = "<group>"; };
 		67213DC42056C49100009DB5 /* EpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesController.swift; sourceTree = "<group>"; };
 		673BC0CB2056B09500B9F4B5 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = Podcast/API/APIService.swift; sourceTree = SOURCE_ROOT; };
 		673BC0D02056B77200B9F4B5 /* PodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				67ECD0F02057EBA8005633D0 /* EpisodeCell.swift */,
 				67ECD0F12057EBA8005633D0 /* EpisodeCell.xib */,
 				67ECD0FB205817CA005633D0 /* PlayerDetailsView.swift */,
+				670766F02061433B004B19ED /* PlayerDetailsView+Gestures.swift */,
 				67ECD0F9205815C2005633D0 /* PlayerDetailsView.xib */,
 				67A3D72A2059FD4300EF269E /* PodcastsSearchingView.xib */,
 			);
@@ -329,6 +332,7 @@
 				67ECFBE72056950D004F6562 /* MainTabBarController.swift in Sources */,
 				67ECD0F22057EBA8005633D0 /* EpisodeCell.swift in Sources */,
 				673BC0CC2056B09500B9F4B5 /* APIService.swift in Sources */,
+				670766F12061433B004B19ED /* PlayerDetailsView+Gestures.swift in Sources */,
 				67ECFBED20569CEC004F6562 /* Podcast.swift in Sources */,
 				67ECD0EF2057EB03005633D0 /* Episode.swift in Sources */,
 				673BC0D12056B77200B9F4B5 /* PodcastCell.swift in Sources */,
