@@ -14,6 +14,7 @@
 		673BC0CC2056B09500B9F4B5 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BC0CB2056B09500B9F4B5 /* APIService.swift */; };
 		673BC0D12056B77200B9F4B5 /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BC0D02056B77200B9F4B5 /* PodcastCell.swift */; };
 		673BC0D32056B96A00B9F4B5 /* PodcastCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 673BC0D22056B96A00B9F4B5 /* PodcastCell.xib */; };
+		677038A42063F00600DEDCCC /* PlayerDetailsView+Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677038A32063F00600DEDCCC /* PlayerDetailsView+Background.swift */; };
 		67A3D7272059EC5B00EF269E /* CMTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A3D7262059EC5B00EF269E /* CMTime.swift */; };
 		67A3D7292059FC2600EF269E /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A3D7282059FC2600EF269E /* Debouncer.swift */; };
 		67A3D72B2059FD4300EF269E /* PodcastsSearchingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67A3D72A2059FD4300EF269E /* PodcastsSearchingView.xib */; };
@@ -42,6 +43,7 @@
 		673BC0CB2056B09500B9F4B5 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = Podcast/API/APIService.swift; sourceTree = SOURCE_ROOT; };
 		673BC0D02056B77200B9F4B5 /* PodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
 		673BC0D22056B96A00B9F4B5 /* PodcastCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastCell.xib; sourceTree = "<group>"; };
+		677038A32063F00600DEDCCC /* PlayerDetailsView+Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerDetailsView+Background.swift"; sourceTree = "<group>"; };
 		67A3D7262059EC5B00EF269E /* CMTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTime.swift; sourceTree = "<group>"; };
 		67A3D7282059FC2600EF269E /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Debouncer.swift; path = Podcast/API/Debouncer.swift; sourceTree = SOURCE_ROOT; };
 		67A3D72A2059FD4300EF269E /* PodcastsSearchingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PodcastsSearchingView.xib; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				67ECD0F12057EBA8005633D0 /* EpisodeCell.xib */,
 				67ECD0FB205817CA005633D0 /* PlayerDetailsView.swift */,
 				670766F02061433B004B19ED /* PlayerDetailsView+Gestures.swift */,
+				677038A32063F00600DEDCCC /* PlayerDetailsView+Background.swift */,
 				67ECD0F9205815C2005633D0 /* PlayerDetailsView.xib */,
 				67A3D72A2059FD4300EF269E /* PodcastsSearchingView.xib */,
 			);
@@ -332,6 +335,7 @@
 				67ECD0FC205817CA005633D0 /* PlayerDetailsView.swift in Sources */,
 				67ECFBEA20569C61004F6562 /* PodcastsSearchController.swift in Sources */,
 				67ECD0F62057F321005633D0 /* String.swift in Sources */,
+				677038A42063F00600DEDCCC /* PlayerDetailsView+Background.swift in Sources */,
 				67A3D7272059EC5B00EF269E /* CMTime.swift in Sources */,
 				67ECFBD72056944A004F6562 /* ViewController.swift in Sources */,
 				67ECFBD52056944A004F6562 /* AppDelegate.swift in Sources */,
