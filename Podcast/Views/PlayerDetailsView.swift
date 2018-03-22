@@ -25,8 +25,17 @@ class PlayerDetailsView: UIView {
             authorLabel.text = episode.author
             guard let url = URL(string: episode.imageUrl?.toSecureHTTPS() ?? "") else { return }
             episodeImageView.sd_setImage(with: url)
-            miniEpisodeImageView.sd_setImage(with: url)
+            miniEpisodeImageView.sd_setImage(with: url) { (image, _, _, _) in
+                guard let image = image else { return }
+                var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo
+                let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { (_) -> UIImage in
+                    return image
+                })
+                nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
+                MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+            }
             
+            setupNowPlayingInfo()
             playEpisode()
         }
     }
@@ -160,6 +169,23 @@ class PlayerDetailsView: UIView {
         }
     }
     
+    private func setupNowPlayingInfo() {
+        var nowPlayingInfo = [String: Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = episode.title
+        nowPlayingInfo[MPMediaItemPropertyArtist] = episode.author
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+    
+    private func setupLockScreenCurrentTime() {
+        var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo
+        guard let currentItem = player.currentItem else { return }
+        let durationInSeconds = CMTimeGetSeconds(currentItem.duration)
+        let elapsedTime = CMTimeGetSeconds(player.currentTime())
+        nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsedTime
+        nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = durationInSeconds
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+    
     //MARK: - Player Time
     private func observePlayerCurrentTime() {
         let interval = CMTime(value: 1, timescale: 2)
@@ -168,6 +194,7 @@ class PlayerDetailsView: UIView {
             let durationTime = self?.player.currentItem?.duration.toDisplayString()
             self?.durationLabel.text = durationTime
             
+            self?.setupLockScreenCurrentTime()
             self?.updateCurrentTimeSlider()
         }
     }
