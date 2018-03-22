@@ -8,6 +8,7 @@
 
 import UIKit
 import AVKit
+import MediaPlayer
 
 class PlayerDetailsView: UIView {
     
@@ -108,6 +109,8 @@ class PlayerDetailsView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        setupRemoteControl()
+        setupAudioSession()
         setupGestures()
         observePlayerCurrentTime()
         
@@ -120,6 +123,41 @@ class PlayerDetailsView: UIView {
     
     static func initFromNib() -> PlayerDetailsView {
         return Bundle.main.loadNibNamed("PlayerDetailsView", owner: self, options: nil)?.first as! PlayerDetailsView
+    }
+    
+    private func setupAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch let err {
+            print("Error: ", err)
+        }
+    }
+    
+    private func setupRemoteControl() {
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        let commandCenter = MPRemoteCommandCenter.shared()
+        
+        commandCenter.playCommand.isEnabled = true
+        commandCenter.playCommand.addTarget { (_) -> MPRemoteCommandHandlerStatus in
+            self.player.play()
+            self.playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            self.miniPlayPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            return .success
+        }
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.pauseCommand.addTarget { (_) -> MPRemoteCommandHandlerStatus in
+            self.player.pause()
+            self.playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            self.miniPlayPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            return .success
+        }
+        
+        commandCenter.togglePlayPauseCommand.isEnabled = true
+        commandCenter.togglePlayPauseCommand.addTarget { (_) -> MPRemoteCommandHandlerStatus in
+            self.handlePlayPause()
+            return .success
+        }
     }
     
     //MARK: - Player Time
