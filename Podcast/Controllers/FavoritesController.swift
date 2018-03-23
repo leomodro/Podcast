@@ -19,6 +19,13 @@ class FavoritesController: UICollectionViewController {
         setupCollectionView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        podcasts = UserDefaults.standard.savedPodcast()
+        collectionView?.reloadData()
+        UIApplication.mainTabBarController()?.viewControllers?[1].tabBarItem.badgeValue = nil
+    }
+    
     //MARK: - Collection View
     private func setupCollectionView() {
         collectionView?.backgroundColor = .white
@@ -50,6 +57,12 @@ class FavoritesController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FavoritePodcastCell
         cell.podcast = podcasts[indexPath.row]
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let episodes = EpisodesController()
+        episodes.podcast = self.podcasts[indexPath.row]
+        navigationController?.pushViewController(episodes, animated: true)
     }
 }
 

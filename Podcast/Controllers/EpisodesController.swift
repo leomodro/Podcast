@@ -43,10 +43,14 @@ class EpisodesController: UITableViewController {
     }
     
     private func setupNavigationBarButtons() {
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(title: "Favorite", style: .plain, target: self, action: #selector(handleSaveFavorite)),
-            UIBarButtonItem(title: "Fetch", style: .plain, target: self, action: #selector(handleFetchFavorite))
-        ]
+        let savedPodcasts = UserDefaults.standard.savedPodcast()
+        if savedPodcasts.index(where: { $0.trackName == self.podcast.trackName && $0.artistName == self.podcast.artistName}) != nil {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "heart"), style: .plain, target: nil, action: nil)
+        } else {
+            navigationItem.rightBarButtonItems = [
+                UIBarButtonItem(title: "Favorite", style: .plain, target: self, action: #selector(handleSaveFavorite))
+            ]
+        }
     }
     
     @objc private func handleSaveFavorite() {
@@ -54,14 +58,20 @@ class EpisodesController: UITableViewController {
         listPodcast.append(self.podcast)
         let data = NSKeyedArchiver.archivedData(withRootObject: listPodcast)
         UserDefaults.standard.set(data, forKey: UserDefaults.favoritePodcastKey)
+        showBadgeHighlight()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "heart"), style: .plain, target: nil, action: nil)
     }
     
     @objc private func handleFetchFavorite() {
         guard let data = UserDefaults.standard.data(forKey: UserDefaults.favoritePodcastKey) else { return }
         let podcasts = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Podcast]
         podcasts?.forEach({ (p) in
-            print(p.trackName)
+            print(p.trackName ?? "")
         })
+    }
+    
+    private func showBadgeHighlight() {
+        UIApplication.mainTabBarController()?.viewControllers?[1].tabBarItem.badgeValue = "New"
     }
     
     //MARK: - Table View
