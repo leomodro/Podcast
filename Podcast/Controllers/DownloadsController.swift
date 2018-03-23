@@ -28,6 +28,7 @@ class DownloadsController: UITableViewController {
     
     //MARK: - Setups
     private func setupTableView() {
+        tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "EpisodeCell", bundle: nil), forCellReuseIdentifier: cellId)
     }
     
