@@ -9,7 +9,9 @@
 import Foundation
 
 extension UserDefaults {
+    
     static let favoritePodcastKey = "favoritePodcastKey"
+    static let downloadedEpisodesKey = "downloadedEpisodesKey"
     
     func savedPodcast() -> [Podcast] {
         guard let savedPodcastData = UserDefaults.standard.data(forKey: UserDefaults.favoritePodcastKey) else { return [] }
@@ -24,5 +26,42 @@ extension UserDefaults {
         }
         let data = NSKeyedArchiver.archivedData(withRootObject: filteredPodcasts)
         UserDefaults.standard.set(data, forKey: UserDefaults.favoritePodcastKey)
+    }
+    
+    func downloadEpisode(episode: Episode) {
+        do {
+            var episodes = downloadedEpisodes()
+            episodes.insert(episode, at: 0)
+            let data = try JSONEncoder().encode(episodes)
+            UserDefaults.standard.set(data, forKey: UserDefaults.downloadedEpisodesKey)
+        } catch let err {
+            print("Error encoding: ", err)
+        }
+    }
+    
+    func downloadedEpisodes() -> [Episode] {
+        guard let episodesData = data(forKey: UserDefaults.downloadedEpisodesKey) else { return [] }
+        do {
+            let episodes = try JSONDecoder().decode([Episode].self, from: episodesData)
+            return episodes
+        } catch let err {
+            print("Error decoding: ", err)
+        }
+        return []
+    }
+    
+    func deleteEpisode(episode: Episode) {
+        let savedEpisodes = downloadedEpisodes()
+        let filteredEpisodes = savedEpisodes.filter { (e) -> Bool in
+            // you should use episode.collectionId to be safer with deletes
+            return e.title != episode.title
+        }
+        
+        do {
+            let data = try JSONEncoder().encode(filteredEpisodes)
+            UserDefaults.standard.set(data, forKey: UserDefaults.downloadedEpisodesKey)
+        } catch let encodeErr {
+            print("Failed to encode episode:", encodeErr)
+        }
     }
 }
