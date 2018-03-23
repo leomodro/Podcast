@@ -17,7 +17,7 @@ class APIService {
     func downloadEpisode(episode: Episode) {
         let downloadRequest = DownloadRequest.suggestedDownloadDestination()
         Alamofire.download(episode.streamUrl, to: downloadRequest).downloadProgress { (progress) in
-            
+            print(progress.fractionCompleted)
             }.response { (resp) in
                 var downloadedEpisodes = UserDefaults.standard.downloadedEpisodes()
                 guard let index = downloadedEpisodes.index(where: { $0.title == episode.title && $0.author == episode.author }) else { return }
