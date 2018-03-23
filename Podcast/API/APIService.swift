@@ -14,6 +14,23 @@ class APIService {
     
     static let shared = APIService()
     
+    func downloadEpisode(episode: Episode) {
+        let downloadRequest = DownloadRequest.suggestedDownloadDestination()
+        Alamofire.download(episode.streamUrl, to: downloadRequest).downloadProgress { (progress) in
+            
+            }.response { (resp) in
+                var downloadedEpisodes = UserDefaults.standard.downloadedEpisodes()
+                guard let index = downloadedEpisodes.index(where: { $0.title == episode.title && $0.author == episode.author }) else { return }
+                downloadedEpisodes[index].fileUrl = resp.destinationURL?.absoluteString ?? ""
+                do {
+                    let data = try JSONEncoder().encode(downloadedEpisodes)
+                    UserDefaults.standard.set(data, forKey: UserDefaults.downloadedEpisodesKey)
+                } catch let err {
+                    print("Error: ", err)
+                }
+        }
+    }
+    
     func fetchPodcasts(searchText: String, completionHandler: @escaping ([Podcast]) -> ()) {
         let url = "https://itunes.apple.com/search"
         let parameters = ["term": searchText, "media": "podcast"]
