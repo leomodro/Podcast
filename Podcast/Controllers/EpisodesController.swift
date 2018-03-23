@@ -11,7 +11,6 @@ import FeedKit
 
 class EpisodesController: UITableViewController {
     
-    let favoritePodcastKey = "favoritePodcastKey"
     var podcast: Podcast! {
         didSet {
             navigationItem.title = podcast.trackName
@@ -51,14 +50,18 @@ class EpisodesController: UITableViewController {
     }
     
     @objc private func handleSaveFavorite() {
-        let data = NSKeyedArchiver.archivedData(withRootObject: self.podcast)
-        UserDefaults.standard.set(data, forKey: favoritePodcastKey)
+        var listPodcast = UserDefaults.standard.savedPodcast()
+        listPodcast.append(self.podcast)
+        let data = NSKeyedArchiver.archivedData(withRootObject: listPodcast)
+        UserDefaults.standard.set(data, forKey: UserDefaults.favoritePodcastKey)
     }
     
     @objc private func handleFetchFavorite() {
-        guard let data = UserDefaults.standard.data(forKey: favoritePodcastKey) else { return }
-        let podcast = NSKeyedUnarchiver.unarchiveObject(with: data) as? Podcast
-        print(podcast?.trackName)
+        guard let data = UserDefaults.standard.data(forKey: UserDefaults.favoritePodcastKey) else { return }
+        let podcasts = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Podcast]
+        podcasts?.forEach({ (p) in
+            print(p.trackName)
+        })
     }
     
     //MARK: - Table View
